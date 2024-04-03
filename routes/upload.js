@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+
+
+
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
-module.exports = router;
+// router.post(
+//   "/",
+//   upload.single("image", async function (req, res, next) {
+//     let nameImage = "rambo.jpg";
+//     if (req.file){
+//       nameImage = req.file.filename;
+//     }
+
+//     const {name, price, amount} = req.body;
+//     let new
+//   })
+// );
+
+

@@ -1,9 +1,25 @@
 var express = require("express");
 var router = express.Router();
 var productModel = require("../models/product");
+
 const mongoose = require("mongoose");
 
 router.use(express.json());
+
+// const multer = require("multer");
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "./public/images");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, new Date().getTime() + "_" + file.originalname);
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
+
 /* GET users listing. */
 router.get("/", async function (req, res, next) {
   try {
@@ -47,11 +63,16 @@ router.get("/:id", async function (req, res, next) {
 
 router.post("/", async function (req, res, next) {
   try {
+    // let nameImage = "rambo.jpg";
+    // if (req.file) {
+    //   nameImage = req.file.filename;
+    // }
     const { prod_name, price, amount } = req.body;
     let newProduct = new productModel({
       prod_name: prod_name,
       price: price,
       amount: amount,
+      // img: nameImage,
     });
     let product = await newProduct.save();
     return res.status(201).send({
@@ -76,6 +97,7 @@ router.put("/:id", async function (req, res, next) {
         prod_name: prod_name,
         price: price,
         amount: amount,
+        // img:nameImage,
       },
       { new: true }
     );
@@ -93,22 +115,21 @@ router.put("/:id", async function (req, res, next) {
   }
 });
 
-router.delete('/:id', async function(req, res, next) {
+router.delete("/:id", async function (req, res, next) {
   try {
     let product = await productModel.findByIdAndDelete(req.params.id);
     return res.status(200).send({
-        data: product,
-        message: 'product deleted successfully',
-        success: true,
-    })
+      data: product,
+      message: "product deleted successfully",
+      success: true,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send({
-        message:'error deleting product',
-        success:false,
-    })
+      message: "error deleting product",
+      success: false,
+    });
   }
 });
-
 
 module.exports = router;
