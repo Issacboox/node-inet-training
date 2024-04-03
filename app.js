@@ -11,6 +11,23 @@ const productsRouter = require('./routes/products');
 
 var app = express();
 var cors = require('cors')
+
+const mongoose = require('mongoose');
+const { DB_HOST, DB_PORT, DB_NAME } = process.env;
+
+mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+  // useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  connectTimeoutMS: 10000,
+  retryWrites: true,
+  // loadBalanced: false
+}).then(() => {
+  console.log('DB connect!');
+}).catch(err => {
+  console.error('DB connect error:', err);
+});
+
+
 app.use(cors())
 
 // view engine setup
